@@ -57,7 +57,7 @@ async function handleIssue(sdelements, octokit, github) {
                         tags.push(label)
                     }
                 }
-                core.info(`Syncing ${tags.length} tags`)
+                core.info(`Syncing ${tags.length} tags [${tags.join(',')}]`)
                 await sdelements.assignTagsToTask(task.id, tags)
                 break
             default:

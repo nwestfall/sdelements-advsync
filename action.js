@@ -3,7 +3,7 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 
 async function exec () {
-    core.info("Starting action")
+    console.log("Starting action")
     try
     {
         const config = parseConfig()

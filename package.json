@@ -4,6 +4,7 @@
   "description": "Advanced Syncing of Tasks with SD Elements",
   "main": "sdelements.js",
   "scripts": {
+    "build": "ncc build action.js --minify",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

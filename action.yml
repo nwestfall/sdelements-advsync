@@ -1,0 +1,19 @@
+name: 'SD Elements Advanced Sync'
+description: 'Sync data between GitHub and SD Elements'
+author: 'nwestfall'
+inputs:
+  url:
+    description: 'The base URL for your SD Elements account'
+    required: true
+  apitoken:
+    description: 'The api token from your SD Elements Account'
+    required: true
+  project:
+    description: 'The project ID you want to use'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'shield'
+  color: 'orange

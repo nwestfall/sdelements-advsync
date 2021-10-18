@@ -130,7 +130,7 @@ class SDElements {
         const analysisSessionId = JSON.parse(body).id;
         reqBody = {
             analysis_session: analysisSessionId,
-            behavior: "combine",
+            behaviour: "combine",
             confidence: "high",
             findings: {},
             findings_ref: reference,

@@ -93,7 +93,7 @@ async function handleIssueComment(sdelements, octokit, github) {
                     const user = await octokit.request("GET /users/{username}", {
                         username: userLogin
                     })
-                    const commentDesc = comment.substring(7, str.length).trimStart();
+                    const commentDesc = comment.substring(7, comment.length).trimStart();
                     if(user)
                         await sdelements.createAVerificationNote(task.id, user.data.email, "fail", github.context.payload.comment.html_url, commentDesc)
                     else

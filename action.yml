@@ -16,4 +16,4 @@ runs:
   main: 'dist/index.js'
 branding:
   icon: 'shield'
-  color: 'orange
+  color: 'orange'

@@ -79,17 +79,25 @@ async function handleIssueComment(sdelements, octokit, github) {
                 // Support commands
                 if(comment.startsWith('/sdpass')) {
                     const userLogin = github.context.payload.comment.user.login
+                    core.info(`Looking up email for ${userLogin}`)
                     const user = await octokit.request("GET /users/{username}", {
                         username: userLogin
                     })
-                    await sdelements.createAVerificationNote(task.id, user.email, "pass", github.context.payload.comment.html_url, null)
+                    if(user)
+                        await sdelements.createAVerificationNote(task.id, user.email, "pass", github.context.payload.comment.html_url, null)
+                    else
+                        core.warning("Unable to find user")
                 } else if(comment.startsWith('/sdfail')) {
                     const userLogin = github.context.payload.comment.user.login
+                    core.info(`Looking up email for ${userLogin}`)
                     const user = await octokit.request("GET /users/{username}", {
                         username: userLogin
                     })
                     const commentDesc = comment.substring(7, str.length).trimStart();
-                    await sdelements.createAVerificationNote(task.id, user.email, "fail", github.context.payload.comment.html_url, commentDesc)
+                    if(user)
+                        await sdelements.createAVerificationNote(task.id, user.email, "fail", github.context.payload.comment.html_url, commentDesc)
+                    else
+                        core.warning("Unable to find user")
                 } else {
                     await sdelements.addNoteToTask(task.id, `[${github.context.payload.comment.user.login}] ${comment}`)
                 }

@@ -43,7 +43,7 @@ async function handleIssue(sdelements, octokit, github) {
                         const user = await octokit.request("GET /users/{username}", {
                             username: userLogin
                         })
-                        userList.push(user.email)
+                        userList.push(user.data.email)
                     }
                 }
                 await sdelements.assignUsersToTask(task.id, userList)
@@ -84,7 +84,7 @@ async function handleIssueComment(sdelements, octokit, github) {
                         username: userLogin
                     })
                     if(user)
-                        await sdelements.createAVerificationNote(task.id, user.email, "pass", github.context.payload.comment.html_url, null)
+                        await sdelements.createAVerificationNote(task.id, user.data.email, "pass", github.context.payload.comment.html_url, null)
                     else
                         core.warning("Unable to find user")
                 } else if(comment.startsWith('/sdfail')) {
@@ -95,7 +95,7 @@ async function handleIssueComment(sdelements, octokit, github) {
                     })
                     const commentDesc = comment.substring(7, str.length).trimStart();
                     if(user)
-                        await sdelements.createAVerificationNote(task.id, user.email, "fail", github.context.payload.comment.html_url, commentDesc)
+                        await sdelements.createAVerificationNote(task.id, user.data.email, "fail", github.context.payload.comment.html_url, commentDesc)
                     else
                         core.warning("Unable to find user")
                 } else {

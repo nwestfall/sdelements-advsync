@@ -29,6 +29,7 @@ async function exec () {
 async function handleIssue(sdelements, octokit, github) {
     const task = await sdelements.findTaskFromIssueTitle(github.context.payload.issue.title)
     if(task !== null) {
+        core.info(`Found a task from the title - ${task.id}`)
         switch(github.context.payload.action) {
             case "closed":
                 await sdelements.addNoteToTask(task.id, `${github.context.payload.sender.login} closed the issue`)
@@ -52,9 +53,11 @@ async function handleIssue(sdelements, octokit, github) {
                 const tags = []
                 if(github.context.payload.issue.labels.length > 0) {
                     for(var i = 0; i < github.context.payload.issue.labels.length; i++) {
-                        tags.push(github.context.payload.issue.labels[i])
+                        const label = github.context.payload.issue.labels[i]
+                        tags.push(label)
                     }
                 }
+                core.info(`Syncing ${tags.length} tags`)
                 await sdelements.assignTagsToTask(task.id, tags)
                 break
             default:
@@ -69,6 +72,7 @@ async function handleIssue(sdelements, octokit, github) {
 async function handleIssueComment(sdelements, octokit, github) {
     const task = await sdelements.findTaskFromIssueTitle(github.context.payload.issue.title)
     if(task !== null) {
+        core.info(`Found a task from the title - ${task.id}`)
         switch(github.context.payload.action) {
             case "created":
                 const comment = github.context.payload.comment.body.trimStart()

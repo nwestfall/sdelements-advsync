@@ -1,0 +1,32 @@
+{
+  "name": "sdelements-advsync",
+  "version": "0.1.0",
+  "description": "Advanced Syncing of Tasks with SD Elements",
+  "main": "sdelements.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sd",
+    "elements",
+    "sync",
+    "github",
+    "action"
+  ],
+  "author": "Nathan Westfall",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "basic-auth-header": "^1.0.1",
+    "command-line-args": "^5.2.0",
+    "command-line-usage": "^6.1.1",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.5",
+    "node-fetch": "^2.6.1",
+    "sleep-promise": "^9.1.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3"
+  }
+}

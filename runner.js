@@ -8,6 +8,7 @@ const cmdOptions = [
     { name: 'apitoken', alias: 't', type: String },
     { name: 'project', alias: 'p', type: String },
     { name: 'title', type: String },
+    { name: 'tags', type: String },
     { name: 'help', alias: 'h', type: Boolean }
 ]
 
@@ -38,6 +39,11 @@ const sections = [
                 name: 'title',
                 typeLabel: '{underline title}',
                 description: 'The title of a task'
+            },
+            {
+                name: 'tags',
+                typeLabel: '{underline title}',
+                description: 'The tags to add to a task'
             },
             {
                 name: 'help',
@@ -75,6 +81,11 @@ async function run() {
                 console.log("Getting task from title");
                 const task = await sdelements.findTaskFromIssueTitle(options.title);
                 console.log(task);
+                if(options.tags) {
+                    console.log("Adding tags to task")
+                    const tags = options.tags.split(',')
+                    await sdelements.assignTagsToTask(task.id, tags)
+                }
             } else {
                 console.log("Getting tasks");
                 const tasks = await sdelements.getTasks();

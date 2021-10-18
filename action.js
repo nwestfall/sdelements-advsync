@@ -16,6 +16,8 @@ async function exec () {
             case "issue_comment":
                 await handleIssueComment(sdelements, octokit, github)
                 break
+            default:
+                core.warning(`No supported event occurred (${github.context.eventName}).  Consider filtering your workflow`)
         }
     } catch (error) {
         core.error(error)
@@ -54,6 +56,9 @@ async function handleIssue(sdelements, octokit, github) {
                 }
                 await sdelements.assignTagsToTask(task.id, tags)
                 break
+            default:
+                core.warning(`No supported payload action (${github.context.payload.action}).  Please consider filtering your workflow.`)
+                break
         }
     } else {
         core.warning(`SD Elements Task could not be found from title - ${github.context.payload.issue.title}`)
@@ -83,6 +88,9 @@ async function handleIssueComment(sdelements, octokit, github) {
                 } else {
                     await sdelements.addNoteToTask(task.id, `[${github.context.payload.comment.user.login}] ${comment}`)
                 }
+                break
+            default:
+                core.warning(`No supported payload action (${github.context.payload.action}).  Please consider filtering your workflow.`)
                 break
         }
     } else {

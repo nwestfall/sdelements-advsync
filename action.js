@@ -78,13 +78,13 @@ async function handleIssueComment(sdelements, octokit, github) {
                 const comment = github.context.payload.comment.body.trimStart()
                 // Support commands
                 if(comment.startsWith('/sdpass')) {
-                    const userLogin = github.context.payload.issue.assignees[i].login
+                    const userLogin = github.context.payload.comment.user.login
                     const user = await octokit.request("GET /users/{username}", {
                         username: userLogin
                     })
                     await sdelements.createAVerificationNote(task.id, user.email, "pass", github.context.payload.comment.html_url, null)
                 } else if(comment.startsWith('/sdfail')) {
-                    const userLogin = github.context.payload.issue.assignees[i].login
+                    const userLogin = github.context.payload.comment.user.login
                     const user = await octokit.request("GET /users/{username}", {
                         username: userLogin
                     })

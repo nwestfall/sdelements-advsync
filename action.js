@@ -53,7 +53,7 @@ async function handleIssue(sdelements, octokit, github) {
                 const tags = []
                 if(github.context.payload.issue.labels.length > 0) {
                     for(var i = 0; i < github.context.payload.issue.labels.length; i++) {
-                        const label = github.context.payload.issue.labels[i]
+                        const label = github.context.payload.issue.labels[i].name
                         tags.push(label)
                     }
                 }

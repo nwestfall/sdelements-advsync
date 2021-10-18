@@ -3,7 +3,7 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 
 async function exec () {
-    console.log("Starting action")
+    core.info("Starting action")
     try
     {
         const config = parseConfig()
@@ -11,7 +11,7 @@ async function exec () {
         const sdelements = new SDElements(config.url, config.apitoken, config.project)
         
         switch(github.context.eventName) {
-            case "issue":
+            case "issues":
                 await handleIssue(sdelements, octokit, github)
                 break
             case "issue_comment":

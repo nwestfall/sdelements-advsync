@@ -111,10 +111,20 @@ class SDElements {
 
     async createAVerificationNote(taskId, email, status, reference, desc) {
         let reqBody = {
-            analysis_ref: email,
-            analysis_type: "whitehat"
+            analysis_session: null,
+            behaviour: "combine",
+            confidence: "high",
+            findings: {},
+            findings_ref: `${email}-${reference}`,
+            status: status
         };
-        let response = await fetch(`${this.url}/api/v2/projects/${this.project}/analysis-sessions/`, {
+        if(desc) {
+            reqBody.findings = [{
+                desc: desc,
+                count: 1
+            }]
+        }
+        let response = await fetch(`${this.url}/api/v2/projects/${this.project}/tasks/${taskId}/analysis-notes/`, {
             method: 'POST',
             body: JSON.stringify(reqBody),
             headers: {
@@ -124,34 +134,6 @@ class SDElements {
             }
         });
         let body = await response.text();
-        if(!response.ok) {
-            throw new Error(`${response.statusText} - ${body}`)
-        }
-        const analysisSessionId = JSON.parse(body).id;
-        reqBody = {
-            analysis_session: analysisSessionId,
-            behaviour: "combine",
-            confidence: "high",
-            findings: {},
-            findings_ref: reference,
-            status: status
-        };
-        if(desc) {
-            reqBody.findings = [{
-                desc: desc,
-                count: 1
-            }]
-        }
-        response = await fetch(`${this.url}/api/v2/projects/${this.project}/tasks/${taskId}/analysis-notes/`, {
-            method: 'POST',
-            body: JSON.stringify(reqBody),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Token ${this.apitoken}`
-            }
-        });
-        body = await response.text();
         if(!response.ok) {
             throw new Error(`${response.statusText} - ${body}`)
         }
